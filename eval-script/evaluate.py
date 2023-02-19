@@ -11,13 +11,15 @@ import jsonpickle
 import utils
 from dataset import file_to_dataset, DatasetEntry, SYNONYM, RELATIONS
 from patterns import get_patterns
-from mlm import BertMaskedLanguageModel, AbstractMaskedLanguageModel, RobertaMaskedLanguageModel
+from mlm import BertMaskedLanguageModel, AbstractMaskedLanguageModel, RobertaMaskedLanguageModel, CamembertMaskedLanguageModel, HerbertMaskedLanguageModel
 
 logger = log.get_logger('root')
 
 MODELS = {
     'bert': BertMaskedLanguageModel,
     'roberta': RobertaMaskedLanguageModel,
+    'camembert': CamembertMaskedLanguageModel,
+    'herbert': HerbertMaskedLanguageModel,
 }
 
 
@@ -228,7 +230,7 @@ def _load_predictions_from_file(path: str) -> Dict[str, List[List[str]]]:
 
 def predictions_for_entry(model: AbstractMaskedLanguageModel, entry: DatasetEntry, num_predictions=100):
     # get the corresponding patterns
-    patterns = get_patterns(entry.base_word, entry.relation)
+    patterns = get_patterns(entry.base_word, entry.relation, model)
     predictions = []
 
     for pattern in patterns:
@@ -254,7 +256,7 @@ if __name__ == '__main__':
     parser.add_argument('--raw_output_file', default=None, type=str)
 
     # parameters for computing new predictions
-    parser.add_argument('--model_cls', choices=['bert', 'roberta'], default='bert')
+    parser.add_argument('--model_cls', choices=['bert', 'roberta', 'camembert', 'herbert'], default='bert')
     parser.add_argument('--model_name', type=str, default='bert-base-uncased')
     parser.add_argument('--embeddings', type=str, default=None)
     parser.add_argument('--num_predictions', type=int, default=100)

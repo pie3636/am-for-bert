@@ -3,10 +3,10 @@ from typing import List, Optional, Dict
 
 import torch
 from torch.nn import Module, Embedding
-from transformers import BertTokenizer, RobertaTokenizer, BertForMaskedLM, RobertaForMaskedLM, GPT2Tokenizer
+from transformers import BertTokenizer, RobertaTokenizer, CamembertTokenizer, BertForMaskedLM, RobertaForMaskedLM, CamembertForMaskedLM, GPT2Tokenizer, HerbertTokenizer, AutoModelForMaskedLM
 
 import log
-from patterns import WORD_TOKEN, MASK_TOKEN
+import patterns
 
 logger = log.get_logger('root')
 
@@ -61,8 +61,8 @@ class BertMaskedLanguageModel(AbstractMaskedLanguageModel):
 
         replace_base_word = self.embeddings and base_word in self.embeddings
 
-        pattern = pattern.replace(MASK_TOKEN, self.tokenizer.mask_token)
-        left_context, right_context = pattern.split(WORD_TOKEN)
+        pattern = pattern.replace(patterns.MASK_TOKEN, self.tokenizer.mask_token)
+        left_context, right_context = pattern.split(patterns.WORD_TOKEN)
 
         if not replace_base_word:
             model_input = self._prepare_text(''.join([left_context, base_word, right_context]))
@@ -153,6 +153,26 @@ class RobertaMaskedLanguageModel(BertMaskedLanguageModel):
     def get_predictions(self, pattern: str, base_word: str, num_predictions: int) -> List[str]:
         predictions = super().get_predictions(pattern, base_word, num_predictions)
         return [w.replace('Ġ', '').lower() for w in predictions]
+
+
+class CamembertMaskedLanguageModel(BertMaskedLanguageModel):
+    tokenizer_cls = CamembertTokenizer
+    model_cls = CamembertForMaskedLM
+    model_str = 'roberta'
+
+    def get_predictions(self, pattern: str, base_word: str, num_predictions: int) -> List[str]:
+        predictions = super().get_predictions(pattern, base_word, num_predictions)
+        return [w.replace('Ġ', '').lower() for w in predictions]
+
+
+class HerbertMaskedLanguageModel(BertMaskedLanguageModel):
+    tokenizer_cls = HerbertTokenizer
+    model_cls = AutoModelForMaskedLM
+    model_str = 'bert'
+
+    def get_predictions(self, pattern: str, base_word: str, num_predictions: int) -> List[str]:
+        predictions = super().get_predictions(pattern, base_word, num_predictions)
+        return [w.replace('</w>', '').lower() for w in predictions]
 
 
 if __name__ == '__main__':
