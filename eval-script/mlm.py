@@ -40,6 +40,7 @@ class BertMaskedLanguageModel(AbstractMaskedLanguageModel):
     tokenizer_cls = BertTokenizer
     model_cls = BertForMaskedLM
     model_str = 'bert'
+    model_str2 = 'bert'
 
     def __init__(self, model_name: str, embeddings: Optional[Dict[str, torch.Tensor]] = None):
         self.tokenizer = type(self).tokenizer_cls.from_pretrained(model_name)
@@ -149,6 +150,7 @@ class RobertaMaskedLanguageModel(BertMaskedLanguageModel):
     tokenizer_cls = RobertaTokenizer
     model_cls = RobertaForMaskedLM
     model_str = 'roberta'
+    model_str2 = 'roberta'
 
     def get_predictions(self, pattern: str, base_word: str, num_predictions: int) -> List[str]:
         predictions = super().get_predictions(pattern, base_word, num_predictions)
@@ -159,6 +161,7 @@ class CamembertMaskedLanguageModel(BertMaskedLanguageModel):
     tokenizer_cls = CamembertTokenizer
     model_cls = CamembertForMaskedLM
     model_str = 'roberta'
+    model_str2 = 'camembert'
 
     def get_predictions(self, pattern: str, base_word: str, num_predictions: int) -> List[str]:
         predictions = super().get_predictions(pattern, base_word, num_predictions)
@@ -169,6 +172,7 @@ class HerbertMaskedLanguageModel(BertMaskedLanguageModel):
     tokenizer_cls = HerbertTokenizer
     model_cls = AutoModelForMaskedLM
     model_str = 'bert'
+    model_str2 = 'herbert'
 
     def get_predictions(self, pattern: str, base_word: str, num_predictions: int) -> List[str]:
         predictions = super().get_predictions(pattern, base_word, num_predictions)

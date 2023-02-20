@@ -7,11 +7,11 @@ WORD_TOKEN = '<W>'
 MASK_TOKEN = '[MASK]'
 
 def get_patterns(word: AnnotatedWord, relation: str, model: mlm.AbstractMaskedLanguageModel):
-    if model.model_str in ['roberta', 'bert']:
+    if model.model_str2 in ['roberta', 'bert']:
         lang = 'en'
-    elif model.model_str in ['camembert']:
+    elif model.model_str2 in ['camembert']:
         lang = 'fr'
-    elif model.model_str in ['herbert']:
+    elif model.model_str2 in ['herbert']:
         lang = 'pl'
     else:
         raise ValueError("Unknown model {}".format(model.model_str))
