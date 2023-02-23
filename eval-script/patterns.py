@@ -47,7 +47,7 @@ def get_patterns_antonym(_, lang):
                 '<W> to przeciwieństwo do słowa [MASK]',
                 '<W> to nie [MASK]',
                 'ktoś <W> nie jest [MASK]',
-                'obiekt <W> nie jest [MASK]',
+                '<W> obiekt nie jest [MASK]',
                 '" <W> " jest przeciwieństwem do słowa " [MASK] "'
             ]
     }[lang]
