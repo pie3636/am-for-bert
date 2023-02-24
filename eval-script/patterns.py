@@ -44,11 +44,11 @@ def get_patterns_antonym(_, lang):
                 '" <W> " est le contraire de " [MASK] "'
             ],
             'pl': [
-                '<W> to przeciwieństwo do słowa [MASK]',
-                '<W> to nie [MASK]',
-                'ktoś <W> nie jest [MASK]',
-                '<W> obiekt nie jest [MASK]',
-                '" <W> " jest przeciwieństwem do słowa " [MASK] "'
+                '<W> to przeciwieństwo do słowa [MASK] .',
+                '<W> to nie [MASK] .',
+                'ktoś <W> nie jest [MASK] .',
+                '<W> obiekt nie jest [MASK] .',
+                '" <W> " jest przeciwieństwem do słowa " [MASK] " .'
             ]
     }[lang]
 
@@ -78,10 +78,10 @@ def get_patterns_hypernym(word, lang):
                 article + ' <W> est un type de [MASK]'
             ],
             'pl': [
-                '<W> to [MASK]',
-                '" <W> " nawiązuje do słowa [MASK]',
-                '<W> jest rodzajem czegoś co nazywa się [MASK]',
-                'Element kategorii do której należy <W> to [MASK]',
+                '<W> to jest [MASK] .',
+                '" <W> " nawiązuje do słowa [MASK] .',
+                '<W> jest rodzajem czegoś co ma na nazwę [MASK] .',
+                'Element kategorii do której należy <W> to [MASK] .',
             ]
     }[lang]
 
